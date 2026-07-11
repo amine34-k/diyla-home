@@ -191,20 +191,24 @@ function initCheckoutPage() {
     });
 
     (async () => {
+      let telegramOk = false;
       try {
         if (typeof sendOrderToTelegram === "function" && isTelegramConfigured()) {
           const result = await sendOrderToTelegram(order);
-          if (!result.ok) {
-            console.warn("Telegram notify failed:", result.error);
+          telegramOk = Boolean(result?.ok);
+          if (!telegramOk) {
+            console.warn("Telegram notify failed:", result?.error);
           }
+        } else {
+          console.warn("Telegram notify skipped: not configured");
         }
       } catch (err) {
         console.warn("Telegram notify failed:", err);
       } finally {
-        showToast(t("toast.orderSuccess"));
+        showToast(telegramOk ? t("toast.orderSuccess") : t("toast.orderSavedLocal"));
         setTimeout(() => {
           window.location.href = "shop.html";
-        }, 1200);
+        }, 1400);
       }
     })();
   });

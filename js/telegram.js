@@ -1,11 +1,24 @@
 const TELEGRAM_CONFIG_KEY = "diyla-telegram";
 
+// Default credentials (can be overridden in Admin → Settings)
+const TELEGRAM_DEFAULTS = {
+  botToken: "8754943324:AAGRXPgGVYG21WXZwAW1J1V1ATQGGGhYjYc",
+  chatId: "8509770974",
+};
+
 function getTelegramConfig() {
   try {
-    return JSON.parse(localStorage.getItem(TELEGRAM_CONFIG_KEY)) || { botToken: "", chatId: "" };
+    const stored = JSON.parse(localStorage.getItem(TELEGRAM_CONFIG_KEY));
+    if (stored?.botToken && stored?.chatId) {
+      return {
+        botToken: stored.botToken,
+        chatId: String(stored.chatId),
+      };
+    }
   } catch {
-    return { botToken: "", chatId: "" };
+    /* use defaults */
   }
+  return { ...TELEGRAM_DEFAULTS };
 }
 
 function saveTelegramConfig(config) {

@@ -143,6 +143,7 @@ const LOCALE_EN = {
   },
   toast: {
     orderSuccess: "Order placed successfully! We will contact you soon.",
+    orderSavedLocal: "Order saved, but Telegram notification failed.",
     subscribed: "Thank you for subscribing!",
   },
   badges: {

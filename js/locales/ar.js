@@ -141,6 +141,7 @@ const LOCALE_AR = {
   },
   toast: {
     orderSuccess: "تم تقديم الطلب بنجاح! سنتواصل معك قريباً.",
+    orderSavedLocal: "تم حفظ الطلب، لكن إشعار تيليغرام فشل.",
     subscribed: "شكراً لاشتراكك!",
   },
   badges: {
