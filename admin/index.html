@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — Diyla Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin-body">
+  <div class="admin-layout">
+    <aside class="admin-sidebar" id="sidebar">
+      <div class="admin-sidebar-header">
+        <a href="../index.html" class="logo"><img src="../assets/logo-white.png" alt="Diyla Home"></a>
+        <span>Admin Panel</span>
+      </div>
+      <nav class="admin-nav">
+        <a href="#" class="active" data-panel="overview">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          Overview
+        </a>
+        <a href="#" data-panel="products">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4H6z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
+          Products
+        </a>
+        <a href="#" data-panel="orders">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Orders
+        </a>
+        <a href="#" data-panel="settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          Settings
+        </a>
+      </nav>
+      <div class="admin-sidebar-footer">
+        <a href="../index.html" target="_blank">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          View Store
+        </a>
+        <button type="button" class="btn-logout" id="logout-btn">Sign Out</button>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+      <div class="admin-topbar">
+        <div style="display:flex;align-items:center;gap:1rem">
+          <button type="button" class="sidebar-toggle btn-ghost" id="sidebar-toggle" aria-label="Toggle sidebar">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <h1 id="page-title">Overview</h1>
+        </div>
+        <div class="admin-topbar-actions">
+          <span class="admin-user" id="admin-user"></span>
+        </div>
+      </div>
+
+      <!-- Overview Panel -->
+      <section class="admin-panel active" id="panel-overview">
+        <div class="stats-grid" id="stats-grid"></div>
+        <div class="overview-grid">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h2>Recent Orders</h2>
+              <a href="#" class="btn btn-sm btn-outline" data-goto="orders">View All</a>
+            </div>
+            <div class="recent-orders-list" id="recent-orders"></div>
+          </div>
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h2>Products by Category</h2>
+            </div>
+            <div class="category-breakdown" id="category-breakdown"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Products Panel -->
+      <section class="admin-panel" id="panel-products">
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h2>All Products (<span id="product-count">0</span>)</h2>
+            <button type="button" class="btn btn-primary btn-sm" id="add-product-btn">+ Add Product</button>
+          </div>
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>Badge</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="products-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Orders Panel -->
+      <section class="admin-panel" id="panel-orders">
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h2>All Orders (<span id="order-count">0</span>)</h2>
+          </div>
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Order</th>
+                  <th>Customer</th>
+                  <th>Items</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="orders-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Settings Panel -->
+      <section class="admin-panel" id="panel-settings">
+        <div class="admin-card" style="max-width:600px">
+          <div class="admin-card-header">
+            <h2>Store Settings</h2>
+          </div>
+          <div style="padding:1.5rem">
+            <div class="form-group">
+              <label>Store Name</label>
+              <input type="text" value="Diyla Home" disabled>
+            </div>
+            <div class="form-group">
+              <label>Admin Email</label>
+              <input type="email" value="admin@diylahome.com" disabled>
+            </div>
+
+            <hr style="border:none;border-top:1px solid var(--color-border);margin:1.5rem 0">
+
+            <h3 style="font-family:var(--font-display);font-size:1.25rem;margin-bottom:0.75rem;color:var(--color-brand)">Telegram Orders</h3>
+            <p style="font-size:0.9rem;color:var(--color-stone);margin-bottom:1rem">
+              New customer orders are sent to your Telegram. Create a bot with
+              <a href="https://t.me/BotFather" target="_blank" rel="noopener">@BotFather</a>,
+              then get your chat ID from
+              <a href="https://t.me/userinfobot" target="_blank" rel="noopener">@userinfobot</a>
+              (start a chat with your bot first).
+            </p>
+            <form id="telegram-settings-form">
+              <div class="form-group">
+                <label for="telegram-bot-token">Bot Token</label>
+                <input type="password" id="telegram-bot-token" placeholder="123456:ABC-DEF..." autocomplete="off">
+              </div>
+              <div class="form-group">
+                <label for="telegram-chat-id">Chat ID</label>
+                <input type="text" id="telegram-chat-id" placeholder="Your Telegram chat ID" autocomplete="off">
+              </div>
+              <div style="display:flex;gap:0.75rem;flex-wrap:wrap">
+                <button type="submit" class="btn btn-primary btn-sm">Save Telegram Settings</button>
+                <button type="button" class="btn btn-outline btn-sm" id="telegram-test-btn">Send Test Message</button>
+              </div>
+            </form>
+            <p id="telegram-status" style="font-size:0.85rem;margin-top:0.85rem;color:var(--color-stone)"></p>
+
+            <hr style="border:none;border-top:1px solid var(--color-border);margin:1.5rem 0">
+            <p style="font-size:0.9rem;color:var(--color-stone);margin-bottom:1rem">Reset all products to the original default catalog. This cannot be undone.</p>
+            <button type="button" class="btn btn-danger btn-sm" id="reset-products-btn">Reset Products to Defaults</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Product Modal -->
+  <div class="modal-overlay" id="product-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-title">Add Product</h3>
+        <button type="button" class="modal-close" id="modal-close">&times;</button>
+      </div>
+      <form id="product-form">
+        <div class="modal-body">
+          <input type="hidden" id="product-id">
+          <div class="form-group">
+            <label for="product-name">Product Name</label>
+            <input type="text" id="product-name" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="product-category">Category</label>
+              <select id="product-category" required>
+                <option value="furniture">Furniture</option>
+                <option value="decor">Interior Decor</option>
+                <option value="kitchenware">Kitchenware</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="product-badge">Badge (optional)</label>
+              <select id="product-badge">
+                <option value="">None</option>
+                <option value="New">New</option>
+                <option value="Sale">Sale</option>
+                <option value="Bestseller">Bestseller</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="product-price">Price (DZD)</label>
+              <input type="number" id="product-price" min="0" step="1" required>
+            </div>
+            <div class="form-group">
+              <label for="product-original">Original Price (DZD, optional)</label>
+              <input type="number" id="product-original" min="0" step="1">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="product-image">Image URL</label>
+            <input type="url" id="product-image" placeholder="https://..." required>
+            <img id="image-preview" class="image-preview" alt="Preview" style="display:none">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline btn-sm" id="modal-cancel">Cancel</button>
+          <button type="submit" class="btn btn-primary btn-sm">Save Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Order Detail Modal -->
+  <div class="modal-overlay" id="order-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="order-modal-title">Order Details</h3>
+        <button type="button" class="modal-close" id="order-modal-close">&times;</button>
+      </div>
+      <div class="modal-body" id="order-modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline btn-sm" id="order-modal-cancel">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast"></div>
+
+  <script src="../js/auth.js"></script>
+  <script src="../js/products.js"></script>
+  <script src="../js/orders.js"></script>
+  <script src="../js/telegram.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

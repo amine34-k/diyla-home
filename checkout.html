@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Complete your order at Diyla Home — cash on delivery across Algeria.">
+  <title>Checkout — Diyla Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+Arabic:wght@300;400;500;600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="assets/logo.png" type="image/png">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="checkout">
+  <header class="header scrolled">
+    <div class="container header-inner">
+      <a href="index.html" class="logo"><img src="assets/logo.png" alt="Diyla Home"></a>
+      <nav class="nav">
+        <a href="index.html" data-i18n="nav.home">Home</a>
+        <a href="shop.html" data-i18n="nav.shop">Shop</a>
+        <a href="shop.html?category=furniture" data-i18n="nav.furniture">Furniture</a>
+        <a href="shop.html?category=decor" data-i18n="nav.decor">Decor</a>
+        <a href="shop.html?category=kitchenware" data-i18n="nav.kitchenware">Kitchenware</a>
+        <a href="index.html#about" data-i18n="nav.about">About</a>
+      </nav>
+      <div class="header-actions">
+        <select id="lang-switcher" class="lang-switcher" data-i18n-aria="aria.language" aria-label="Language">
+          <option value="en">English</option>
+          <option value="ar">العربية</option>
+        </select>
+        <button type="button" class="menu-toggle" data-i18n-aria="aria.toggleMenu" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <nav class="mobile-nav">
+      <a href="index.html" data-i18n="nav.home">Home</a>
+      <a href="shop.html" data-i18n="nav.shop">Shop</a>
+      <a href="shop.html?category=furniture" data-i18n="nav.furniture">Furniture</a>
+      <a href="shop.html?category=decor" data-i18n="nav.decor">Decor</a>
+      <a href="shop.html?category=kitchenware" data-i18n="nav.kitchenware">Kitchenware</a>
+      <a href="index.html#about" data-i18n="nav.about">About</a>
+    </nav>
+  </header>
+
+  <main class="checkout-page">
+    <div class="container">
+      <div class="checkout-header reveal">
+        <span class="section-label" data-i18n="checkout.label">Checkout</span>
+        <h1 data-i18n="checkout.title">Complete Your Order</h1>
+        <p data-i18n="checkout.subtitle">Pay cash on delivery — no card needed. Enter your details and delivery location.</p>
+      </div>
+
+      <div id="checkout-empty" class="checkout-empty" hidden>
+        <p data-i18n="checkout.noProduct">No product selected. Choose an item from the shop to place an order.</p>
+        <a href="shop.html" class="btn btn-primary" data-i18n="checkout.backToShop">Back to Shop</a>
+      </div>
+
+      <div id="checkout-layout" class="checkout-layout" hidden>
+        <form id="checkout-form" class="checkout-form reveal" novalidate>
+          <fieldset class="checkout-fieldset">
+            <legend data-i18n="checkout.customerInfo">Customer Information</legend>
+            <div class="form-row">
+              <label for="checkout-name" data-i18n="checkout.fullName">Full Name</label>
+              <input type="text" id="checkout-name" name="name" required autocomplete="name" placeholder="Your full name">
+            </div>
+            <div class="form-row">
+              <label for="checkout-phone" data-i18n="checkout.phone">Phone Number</label>
+              <input type="tel" id="checkout-phone" name="phone" required autocomplete="tel" placeholder="05 XX XX XX XX" inputmode="tel">
+            </div>
+          </fieldset>
+
+          <fieldset class="checkout-fieldset">
+            <legend data-i18n="checkout.deliveryInfo">Delivery Address</legend>
+            <div class="form-row">
+              <label for="checkout-wilaya" data-i18n="checkout.wilaya">Wilaya</label>
+              <select id="checkout-wilaya" name="wilaya" required>
+                <option value="">Select wilaya</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label for="checkout-baladiya" data-i18n="checkout.baladiya">Baladiya (Commune)</label>
+              <select id="checkout-baladiya" name="baladiya" required disabled>
+                <option value="">Select baladiya</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label for="checkout-address" data-i18n="checkout.address">Street Address</label>
+              <textarea id="checkout-address" name="address" rows="3" required placeholder="Neighborhood, street, building, floor..."></textarea>
+            </div>
+            <div class="form-row">
+              <label for="checkout-notes" data-i18n="checkout.notes">Order Notes (optional)</label>
+              <textarea id="checkout-notes" name="notes" rows="2" placeholder="Delivery instructions..."></textarea>
+            </div>
+          </fieldset>
+
+          <button type="submit" class="btn btn-primary checkout-submit" data-i18n="checkout.placeOrder">Place Order — Cash on Delivery</button>
+        </form>
+
+        <aside id="checkout-summary" class="checkout-summary reveal" aria-label="Order summary"></aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border:none;padding-top:0">
+        <span data-i18n="footer.copyright">© 2026 Diyla Home. All rights reserved.</span>
+        <a href="shop.html" data-i18n="checkout.backToShop">Back to Shop</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/locales/en.js"></script>
+  <script src="js/locales/ar.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/orders.js"></script>
+  <script src="js/telegram.js"></script>
+  <script src="js/algeria-locations.js"></script>
+  <script src="js/checkout.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Telegram Check — Diyla Home</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .check-wrap { max-width: 520px; margin: 6rem auto; padding: 2rem; background: white; border-radius: 16px; border: 1px solid var(--color-border); box-shadow: var(--shadow-3d-sm); }
+    .check-wrap h1 { font-family: var(--font-display); color: var(--color-brand); margin-bottom: 1rem; }
+    .check-line { margin: 0.65rem 0; font-size: 0.95rem; }
+    .ok { color: #1a7f4b; font-weight: 600; }
+    .bad { color: #8b0021; font-weight: 600; }
+    .muted { color: var(--color-stone); }
+  </style>
+</head>
+<body>
+  <div class="check-wrap">
+    <h1>Telegram Connection Check</h1>
+    <p class="check-line muted" id="status">Checking…</p>
+    <div id="details"></div>
+    <p style="margin-top:1.5rem"><a href="admin/index.html" class="btn btn-primary btn-sm">Back to Admin</a></p>
+  </div>
+
+  <script src="js/products.js"></script>
+  <script src="js/orders.js"></script>
+  <script src="js/telegram.js"></script>
+  <script>
+    (async () => {
+      const status = document.getElementById("status");
+      const details = document.getElementById("details");
+      const config = getTelegramConfig();
+      const configured = Boolean(config.botToken && config.chatId);
+      const maskedToken = config.botToken
+        ? config.botToken.slice(0, 8) + "…" + config.botToken.slice(-4)
+        : "—";
+
+      details.innerHTML = `
+        <p class="check-line">Configured: <span class="${configured ? "ok" : "bad"}">${configured ? "Yes" : "No"}</span></p>
+        <p class="check-line">Bot token: <span class="muted">${maskedToken}</span></p>
+        <p class="check-line">Chat ID: <span class="muted">${config.chatId ? "set (" + String(config.chatId).length + " chars)" : "missing"}</span></p>
+      `;
+
+      if (!configured) {
+        status.innerHTML = '<span class="bad">Not configured.</span> Save bot token + chat ID in Admin → Settings first.';
+        document.title = "Telegram FAIL";
+        window.__TELEGRAM_CHECK__ = { ok: false, reason: "not_configured" };
+        return;
+      }
+
+      status.textContent = "Sending test message…";
+      try {
+        const result = await sendTelegramTestMessage();
+        if (result.ok) {
+          status.innerHTML = '<span class="ok">Working!</span> Check your Telegram — you should see a test message.';
+          document.title = "Telegram OK";
+          window.__TELEGRAM_CHECK__ = { ok: true };
+        } else {
+          status.innerHTML = '<span class="bad">Failed:</span> ' + (result.error || "unknown error");
+          document.title = "Telegram FAIL";
+          window.__TELEGRAM_CHECK__ = { ok: false, reason: result.error || "send_failed" };
+        }
+      } catch (err) {
+        status.innerHTML = '<span class="bad">Network error.</span> Could not reach api.telegram.org';
+        document.title = "Telegram FAIL";
+        window.__TELEGRAM_CHECK__ = { ok: false, reason: "network" };
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Diyla Home — Curated furniture, interior decor, and kitchenware to transform your living space.">
+  <title>Diyla Home — Furniture, Decor & Kitchenware</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+Arabic:wght@300;400;500;600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="assets/logo.png" type="image/png">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="home">
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo"><img src="assets/logo.png" alt="Diyla Home"></a>
+      <nav class="nav">
+        <a href="index.html" class="active" data-i18n="nav.home">Home</a>
+        <a href="shop.html" data-i18n="nav.shop">Shop</a>
+        <a href="shop.html?category=furniture" data-i18n="nav.furniture">Furniture</a>
+        <a href="shop.html?category=decor" data-i18n="nav.decor">Decor</a>
+        <a href="shop.html?category=kitchenware" data-i18n="nav.kitchenware">Kitchenware</a>
+        <a href="#about" data-i18n="nav.about">About</a>
+      </nav>
+      <div class="header-actions">
+        <select id="lang-switcher" class="lang-switcher" data-i18n-aria="aria.language" aria-label="Language">
+          <option value="en">English</option>
+          <option value="ar">العربية</option>
+        </select>
+        <button type="button" class="menu-toggle" data-i18n-aria="aria.toggleMenu" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <nav class="mobile-nav">
+      <a href="index.html" data-i18n="nav.home">Home</a>
+      <a href="shop.html" data-i18n="nav.shop">Shop</a>
+      <a href="shop.html?category=furniture" data-i18n="nav.furniture">Furniture</a>
+      <a href="shop.html?category=decor" data-i18n="nav.decor">Decor</a>
+      <a href="shop.html?category=kitchenware" data-i18n="nav.kitchenware">Kitchenware</a>
+      <a href="#about" data-i18n="nav.about">About</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1920&q=80')"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-orbs" aria-hidden="true">
+      <div class="hero-orb hero-orb--1"></div>
+      <div class="hero-orb hero-orb--2"></div>
+      <div class="hero-orb hero-orb--3"></div>
+    </div>
+    <div class="container hero-content">
+      <div class="hero-panel">
+        <span class="hero-badge" data-i18n="hero.badge">New Collection 2026</span>
+        <h1 data-i18n="hero.title">Where Comfort Meets Timeless Design</h1>
+        <p data-i18n="hero.subtitle">Discover handpicked furniture, elegant decor, and artisan kitchenware — everything you need to create a home that tells your story.</p>
+        <div class="hero-buttons">
+          <a href="shop.html" class="btn btn-primary" data-i18n="hero.shopCollection">Shop Collection</a>
+          <a href="#categories" class="btn btn-outline" data-i18n="hero.exploreCategories">Explore Categories</a>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll" aria-hidden="true">
+      <span>Scroll</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- Trust Bar -->
+  <section class="trust-bar">
+    <div class="container trust-items">
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12l5 5L20 7"/></svg>
+        <strong data-i18n="trust.qualityTitle">Quality Crafted</strong>
+        <span data-i18n="trust.qualityDesc">Premium materials</span>
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="22" height="18" rx="2"/><path d="M1 9h22"/></svg>
+        <strong data-i18n="trust.shippingTitle">Free Shipping</strong>
+        <span data-i18n="trust.shippingDesc">On orders over 20 000 DA</span>
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <strong data-i18n="trust.secureTitle">Cash on Delivery</strong>
+        <span data-i18n="trust.secureDesc">Pay when you receive</span>
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <strong data-i18n="trust.returnsTitle">30-Day Returns</strong>
+        <span data-i18n="trust.returnsDesc">Hassle-free policy</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section class="categories reveal" id="categories">
+    <div class="mesh-bg" aria-hidden="true"></div>
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label" data-i18n="categories.label">Shop by Category</p>
+        <h2 class="section-title" data-i18n="categories.title">Curated for Every Room</h2>
+        <p class="section-subtitle" data-i18n="categories.subtitle">From statement furniture to finishing touches — find pieces that elevate your everyday living.</p>
+      </div>
+      <div class="category-grid">
+        <a href="shop.html?category=furniture" class="category-card reveal reveal-delay-1">
+          <div class="category-card-inner">
+            <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=600&q=80" alt="Furniture collection">
+            <div class="category-overlay">
+              <h3 data-i18n="categories.furniture">Furniture</h3>
+              <p data-i18n="categories.furnitureDesc">Sofas, tables, chairs & more</p>
+              <span class="category-link" data-i18n="categories.shopNow">Shop Now →</span>
+            </div>
+          </div>
+        </a>
+        <a href="shop.html?category=decor" class="category-card reveal reveal-delay-2">
+          <div class="category-card-inner">
+            <img src="https://images.unsplash.com/photo-1616046229476-9f4d7d3e8ea1?w=600&q=80" alt="Interior decor collection">
+            <div class="category-overlay">
+              <h3 data-i18n="categories.decor">Interior Decor</h3>
+              <p data-i18n="categories.decorDesc">Vases, mirrors, textiles & accents</p>
+              <span class="category-link" data-i18n="categories.shopNow">Shop Now →</span>
+            </div>
+          </div>
+        </a>
+        <a href="shop.html?category=kitchenware" class="category-card reveal reveal-delay-3">
+          <div class="category-card-inner">
+            <img src="https://images.unsplash.com/photo-1556911220-bff31c812dba?w=600&q=80" alt="Kitchenware collection">
+            <div class="category-overlay">
+              <h3 data-i18n="categories.kitchenware">Kitchenware</h3>
+              <p data-i18n="categories.kitchenwareDesc">Cookware, serveware & essentials</p>
+              <span class="category-link" data-i18n="categories.shopNow">Shop Now →</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products -->
+  <section class="featured reveal">
+    <div class="container">
+      <div class="section-header" style="text-align:left;margin-bottom:2.5rem">
+        <p class="section-label" data-i18n="featured.label">Featured</p>
+        <h2 class="section-title" data-i18n="featured.title">Customer Favorites</h2>
+      </div>
+      <div class="product-grid"></div>
+      <div style="text-align:center;margin-top:3rem">
+        <a href="shop.html" class="btn btn-outline" data-i18n="featured.viewAll">View All Products</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Story -->
+  <section class="story reveal" id="about">
+    <div class="container story-grid">
+      <div class="story-image">
+        <div class="story-frame">
+          <img src="https://images.unsplash.com/photo-1618220179428-22790b461013?w=700&q=80" alt="Beautifully styled living room">
+        </div>
+      </div>
+      <div class="story-content">
+        <p class="section-label" data-i18n="story.label">Our Story</p>
+        <h2 class="section-title" data-i18n="story.title">Homes Built with Heart</h2>
+        <p data-i18n="story.p1">At Diyla Home, we believe every space deserves pieces that inspire. We source furniture, decor, and kitchenware from artisans and makers who share our passion for quality and sustainable design.</p>
+        <p data-i18n="story.p2">Whether you're furnishing your first apartment or refreshing a family home, we're here to help you create spaces that feel uniquely yours.</p>
+        <div class="story-stats">
+          <div class="stat">
+            <strong>500+</strong>
+            <span data-i18n="story.products">Curated Products</span>
+          </div>
+          <div class="stat">
+            <strong>10k+</strong>
+            <span data-i18n="story.customers">Happy Customers</span>
+          </div>
+          <div class="stat">
+            <strong>4.9★</strong>
+            <span data-i18n="story.rating">Average Rating</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials reveal">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label" data-i18n="testimonials.label">Testimonials</p>
+        <h2 class="section-title" data-i18n="testimonials.title">Loved by Home Enthusiasts</h2>
+      </div>
+      <div class="testimonial-grid">
+        <div class="testimonial-card reveal reveal-delay-1">
+          <div class="testimonial-stars">★★★★★</div>
+          <p data-i18n="testimonials.quote1">"The Oslo sofa transformed our living room. Incredible quality and the delivery was seamless. Diyla Home is now my go-to for everything home."</p>
+          <div class="testimonial-author">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" alt="Sarah M.">
+            <div>
+              <strong>Sarah M.</strong>
+              <span data-i18n="testimonials.verified">Verified Buyer</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card reveal reveal-delay-2">
+          <div class="testimonial-stars">★★★★★</div>
+          <p data-i18n="testimonials.quote2">"Beautiful kitchenware that actually performs. The copper cookware set is stunning and heats evenly. Worth every penny."</p>
+          <div class="testimonial-author">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="James K.">
+            <div>
+              <strong>James K.</strong>
+              <span data-i18n="testimonials.verified">Verified Buyer</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card reveal reveal-delay-3">
+          <div class="testimonial-stars">★★★★★</div>
+          <p data-i18n="testimonials.quote3">"The decor pieces are so thoughtfully curated. My ceramic vase set gets compliments from every guest. Fast shipping too!"</p>
+          <div class="testimonial-author">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" alt="Emily R.">
+            <div>
+              <strong>Emily R.</strong>
+              <span data-i18n="testimonials.verified">Verified Buyer</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="newsletter reveal">
+    <div class="container">
+      <div class="newsletter-box">
+        <p class="section-label" data-i18n="newsletter.label">Stay Inspired</p>
+        <h2 class="section-title" data-i18n="newsletter.title">Join the Diyla Home Community</h2>
+        <p class="section-subtitle" style="margin:0 auto" data-i18n="newsletter.subtitle">Get exclusive offers, styling tips, and early access to new collections.</p>
+        <form class="newsletter-form">
+          <input type="email" data-i18n-placeholder="newsletter.placeholder" placeholder="Enter your email" required data-i18n-aria="aria.email" aria-label="Email address">
+          <button type="submit" class="btn btn-primary" data-i18n="newsletter.subscribe">Subscribe</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo logo--on-dark"><img src="assets/logo-white.png" alt="Diyla Home"></a>
+          <p data-i18n="footer.tagline">Curated furniture, interior decor, and kitchenware for homes that inspire. Quality pieces, thoughtfully selected.</p>
+        </div>
+        <div>
+          <h4 data-i18n="footer.shop">Shop</h4>
+          <ul>
+            <li><a href="shop.html?category=furniture" data-i18n="nav.furniture">Furniture</a></li>
+            <li><a href="shop.html?category=decor" data-i18n="footer.interiorDecor">Interior Decor</a></li>
+            <li><a href="shop.html?category=kitchenware" data-i18n="nav.kitchenware">Kitchenware</a></li>
+            <li><a href="shop.html" data-i18n="footer.allProducts">All Products</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 data-i18n="footer.help">Help</h4>
+          <ul>
+            <li><a href="#" data-i18n="footer.shippingInfo">Shipping Info</a></li>
+            <li><a href="#" data-i18n="footer.returns">Returns</a></li>
+            <li><a href="#" data-i18n="footer.faq">FAQ</a></li>
+            <li><a href="#" data-i18n="footer.contactUs">Contact Us</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 data-i18n="footer.contact">Contact</h4>
+          <ul>
+            <li><a href="mailto:hello@diylahome.com">hello@diylahome.com</a></li>
+            <li><a href="tel:+1234567890">+1 (234) 567-890</a></li>
+            <li data-i18n="footer.hours">Mon – Fri, 9am – 6pm</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span><span data-i18n="footer.copyright">© 2026 Diyla Home. All rights reserved.</span> <a href="admin/login.html" style="opacity:0.5;margin-left:0.5rem" data-i18n="footer.admin">Admin</a></span>
+        <div class="social-links">
+          <a href="#" data-i18n-aria="aria.instagram" aria-label="Instagram">Instagram</a>
+          <a href="#" data-i18n-aria="aria.pinterest" aria-label="Pinterest">Pinterest</a>
+          <a href="#" data-i18n-aria="aria.facebook" aria-label="Facebook">Facebook</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button type="button" class="back-to-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 19V5M5 12l7-7 7 7"/>
+    </svg>
+  </button>
+
+  <script src="js/locales/en.js"></script>
+  <script src="js/locales/ar.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/orders.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

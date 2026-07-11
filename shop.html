@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Shop furniture, interior decor, and kitchenware at Diyla Home.">
+  <title>Shop — Diyla Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+Arabic:wght@300;400;500;600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="assets/logo.png" type="image/png">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="shop">
+  <!-- Header -->
+  <header class="header scrolled">
+    <div class="container header-inner">
+      <a href="index.html" class="logo"><img src="assets/logo.png" alt="Diyla Home"></a>
+      <nav class="nav">
+        <a href="index.html" data-i18n="nav.home">Home</a>
+        <a href="shop.html" class="active" data-i18n="nav.shop">Shop</a>
+        <a href="shop.html?category=furniture" data-i18n="nav.furniture">Furniture</a>
+        <a href="shop.html?category=decor" data-i18n="nav.decor">Decor</a>
+        <a href="shop.html?category=kitchenware" data-i18n="nav.kitchenware">Kitchenware</a>
+        <a href="index.html#about" data-i18n="nav.about">About</a>
+      </nav>
+      <div class="header-actions">
+        <select id="lang-switcher" class="lang-switcher" data-i18n-aria="aria.language" aria-label="Language">
+          <option value="en">English</option>
+          <option value="ar">العربية</option>
+        </select>
+        <button type="button" class="menu-toggle" data-i18n-aria="aria.toggleMenu" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <nav class="mobile-nav">
+      <a href="index.html" data-i18n="nav.home">Home</a>
+      <a href="shop.html" data-i18n="nav.shop">Shop</a>
+      <a href="shop.html?category=furniture" data-i18n="nav.furniture">Furniture</a>
+      <a href="shop.html?category=decor" data-i18n="nav.decor">Decor</a>
+      <a href="shop.html?category=kitchenware" data-i18n="nav.kitchenware">Kitchenware</a>
+      <a href="index.html#about" data-i18n="nav.about">About</a>
+    </nav>
+  </header>
+
+  <!-- Page Hero -->
+  <section class="page-hero reveal">
+    <div class="container">
+      <p class="section-label" data-i18n="shop.label">Our Collection</p>
+      <h1 data-i18n="shop.title">Shop All Products</h1>
+      <p class="section-subtitle" style="margin:0 auto" data-i18n="shop.subtitle">Furniture, decor, and kitchenware — thoughtfully curated for modern living.</p>
+    </div>
+  </section>
+
+  <!-- Shop -->
+  <section class="shop-section reveal">
+    <div class="mesh-bg" aria-hidden="true"></div>
+    <div class="container">
+      <div class="shop-toolbar">
+        <div class="filter-tabs">
+          <button type="button" class="filter-tab active" data-category="all" data-i18n="shop.all">All</button>
+          <button type="button" class="filter-tab" data-category="furniture" data-i18n="categoryLabels.furniture">Furniture</button>
+          <button type="button" class="filter-tab" data-category="decor" data-i18n="categoryLabels.decor">Interior Decor</button>
+          <button type="button" class="filter-tab" data-category="kitchenware" data-i18n="categoryLabels.kitchenware">Kitchenware</button>
+        </div>
+        <span class="shop-count">12 products</span>
+      </div>
+      <div class="product-grid"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo logo--on-dark"><img src="assets/logo-white.png" alt="Diyla Home"></a>
+          <p data-i18n="footer.tagline">Curated furniture, interior decor, and kitchenware for homes that inspire. Quality pieces, thoughtfully selected.</p>
+        </div>
+        <div>
+          <h4 data-i18n="footer.shop">Shop</h4>
+          <ul>
+            <li><a href="shop.html?category=furniture" data-i18n="nav.furniture">Furniture</a></li>
+            <li><a href="shop.html?category=decor" data-i18n="footer.interiorDecor">Interior Decor</a></li>
+            <li><a href="shop.html?category=kitchenware" data-i18n="nav.kitchenware">Kitchenware</a></li>
+            <li><a href="shop.html" data-i18n="footer.allProducts">All Products</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 data-i18n="footer.help">Help</h4>
+          <ul>
+            <li><a href="#" data-i18n="footer.shippingInfo">Shipping Info</a></li>
+            <li><a href="#" data-i18n="footer.returns">Returns</a></li>
+            <li><a href="#" data-i18n="footer.faq">FAQ</a></li>
+            <li><a href="#" data-i18n="footer.contactUs">Contact Us</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 data-i18n="footer.contact">Contact</h4>
+          <ul>
+            <li><a href="mailto:hello@diylahome.com">hello@diylahome.com</a></li>
+            <li><a href="tel:+1234567890">+1 (234) 567-890</a></li>
+            <li data-i18n="footer.hours">Mon – Fri, 9am – 6pm</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span><span data-i18n="footer.copyright">© 2026 Diyla Home. All rights reserved.</span> <a href="admin/login.html" style="opacity:0.5;margin-left:0.5rem" data-i18n="footer.admin">Admin</a></span>
+        <div class="social-links">
+          <a href="#" data-i18n-aria="aria.instagram" aria-label="Instagram">Instagram</a>
+          <a href="#" data-i18n-aria="aria.pinterest" aria-label="Pinterest">Pinterest</a>
+          <a href="#" data-i18n-aria="aria.facebook" aria-label="Facebook">Facebook</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button type="button" class="back-to-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 19V5M5 12l7-7 7 7"/>
+    </svg>
+  </button>
+
+  <script src="js/locales/en.js"></script>
+  <script src="js/locales/ar.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/orders.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
