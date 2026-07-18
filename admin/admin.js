@@ -305,6 +305,11 @@ function initProductModal() {
       originalPrice: parseInt(document.getElementById("product-original").value, 10) || null,
       badge: document.getElementById("product-badge").value || null,
       image: document.getElementById("product-image").value.trim(),
+      images: document
+        .getElementById("product-images")
+        .value.split(/\r?\n/)
+        .map((url) => url.trim())
+        .filter(Boolean),
     };
 
     if (id) {
@@ -331,6 +336,9 @@ function openProductModal(product = null) {
   document.getElementById("product-original").value = product?.originalPrice || "";
   document.getElementById("product-badge").value = product?.badge || "";
   document.getElementById("product-image").value = product?.image || "";
+  document.getElementById("product-images").value = Array.isArray(product?.images)
+    ? product.images.join("\n")
+    : "";
 
   if (product?.image) {
     preview.src = product.image;

@@ -57,26 +57,15 @@ function getCheckoutTotal() {
   }, 0);
 }
 
-function getSimilarProducts(mainId, count = 4) {
-  const main = getProductById(mainId);
-  if (!main) return [];
-  const inOrder = new Set(checkoutItems.map((i) => i.id));
-  const all = getProducts().filter((p) => !inOrder.has(p.id));
-  const sameCategory = all.filter((p) => p.category === main.category);
-  const others = all.filter((p) => p.category !== main.category);
-  return sameCategory.concat(others).slice(0, count);
-}
-
 function renderCheckoutSummary() {
   const summary = document.getElementById("checkout-summary");
   if (!summary || !checkoutItems.length) return;
 
   const itemsHtml = checkoutItems
-    .map((item, index) => {
+    .map((item) => {
       const product = getProductById(item.id);
       if (!product) return "";
       const name = getProductName(product);
-      const isMain = index === 0;
       return `
         <div class="checkout-product" data-item-id="${product.id}">
           <img src="${product.image}" alt="${name}" loading="lazy">
@@ -90,11 +79,6 @@ function renderCheckoutSummary() {
               <button type="button" class="qty-plus" data-item-id="${product.id}" aria-label="${t("aria.increaseQty")}">+</button>
             </div>
           </div>
-          ${
-            isMain
-              ? ""
-              : `<button type="button" class="checkout-item-remove" data-item-id="${product.id}" aria-label="${t("aria.removeItem")}">×</button>`
-          }
         </div>
       `;
     })
@@ -126,49 +110,60 @@ function renderCheckoutSummary() {
     </div>
   `;
 
-  renderCheckoutSuggestions();
+  renderCheckoutGallery();
 }
 
-function renderCheckoutSuggestions() {
-  const container = document.getElementById("checkout-quick-add");
+function getProductImages(product) {
+  const additional = Array.isArray(product.images) ? product.images : [];
+  return [...new Set([product.image, ...additional].filter(Boolean))];
+}
+
+function renderCheckoutGallery() {
+  const container = document.getElementById("checkout-gallery");
   if (!container || !checkoutItems.length) return;
 
-  const suggestions = getSimilarProducts(checkoutItems[0].id);
-  if (!suggestions.length) {
-    container.innerHTML = "";
-    container.hidden = true;
-    return;
-  }
-
-  const cards = suggestions
-    .map((product) => {
-      const name = getProductName(product);
-      return `
-        <div class="suggestion-card">
-          <img src="${product.image}" alt="${name}" loading="lazy">
-          <div class="suggestion-info">
-            <span class="suggestion-name">${name}</span>
-            <span class="suggestion-price">${formatPrice(product.price)}</span>
-          </div>
-          <button type="button" class="suggestion-add" data-product-id="${product.id}">
-            + ${t("checkout.add")}
-          </button>
-        </div>
-      `;
-    })
+  const product = getProductById(checkoutItems[0].id);
+  if (!product) return;
+  const name = getProductName(product);
+  const images = getProductImages(product);
+  const thumbnails = images
+    .map(
+      (image, index) => `
+        <button type="button" class="checkout-gallery-thumb${index === 0 ? " active" : ""}"
+          data-gallery-image="${image}" aria-label="${t("checkout.viewImage")} ${index + 1}"
+          aria-pressed="${index === 0}">
+          <img src="${image}" alt="" loading="lazy">
+        </button>
+      `
+    )
     .join("");
 
   container.innerHTML = `
-    <div class="checkout-quick-add-heading">
-      <div>
-        <span class="section-label">${t("checkout.quickAdd")}</span>
-        <h2 class="checkout-suggestions-title">${t("checkout.alsoLike")}</h2>
-      </div>
-      <span class="checkout-quick-add-hint">${t("checkout.quickAddHint")}</span>
+    <div class="checkout-gallery-heading">
+      <span class="section-label">${t("checkout.yourProduct")}</span>
+      <h2>${name}</h2>
     </div>
-    <div class="suggestion-list">${cards}</div>
+    <div class="checkout-gallery-stage">
+      <img id="checkout-gallery-main" src="${images[0]}" alt="${name}">
+    </div>
+    ${
+      images.length > 1
+        ? `<div class="checkout-gallery-thumbs" aria-label="${t("checkout.moreImages")}">${thumbnails}</div>`
+        : ""
+    }
   `;
   container.hidden = false;
+}
+
+function selectCheckoutGalleryImage(button) {
+  const mainImage = document.getElementById("checkout-gallery-main");
+  if (!mainImage) return;
+  mainImage.src = button.dataset.galleryImage;
+  document.querySelectorAll(".checkout-gallery-thumb").forEach((thumb) => {
+    const active = thumb === button;
+    thumb.classList.toggle("active", active);
+    thumb.setAttribute("aria-pressed", String(active));
+  });
 }
 
 function updateCheckoutTotals() {
@@ -187,11 +182,11 @@ function initCheckoutPage() {
   const product = getProductById(productId);
   const emptyEl = document.getElementById("checkout-empty");
   const layout = document.getElementById("checkout-layout");
-  const quickAdd = document.getElementById("checkout-quick-add");
+  const gallery = document.getElementById("checkout-gallery");
 
   if (!product) {
     if (layout) layout.hidden = true;
-    if (quickAdd) quickAdd.hidden = true;
+    if (gallery) gallery.hidden = true;
     if (emptyEl) emptyEl.hidden = false;
     return;
   }
@@ -212,22 +207,9 @@ function initCheckoutPage() {
   });
 
   document.querySelector(".checkout-page")?.addEventListener("click", (e) => {
-    const addBtn = e.target.closest(".suggestion-add");
-    if (addBtn) {
-      const id = Number(addBtn.dataset.productId);
-      if (!checkoutItems.some((i) => i.id === id)) {
-        checkoutItems.push({ id, quantity: 1 });
-        renderCheckoutSummary();
-        showToast(t("checkout.addedToOrder"));
-      }
-      return;
-    }
-
-    const removeBtn = e.target.closest(".checkout-item-remove");
-    if (removeBtn) {
-      const id = Number(removeBtn.dataset.itemId);
-      checkoutItems = checkoutItems.filter((i) => i.id !== id);
-      renderCheckoutSummary();
+    const galleryThumb = e.target.closest(".checkout-gallery-thumb");
+    if (galleryThumb) {
+      selectCheckoutGalleryImage(galleryThumb);
       return;
     }
 

@@ -1451,111 +1451,83 @@ h1, h2, h3, h4 {
   opacity: 0.9;
 }
 
-/* Checkout quick-add */
-.checkout-quick-add {
+/* Checkout product gallery */
+.checkout-gallery {
   margin: -0.5rem 0 1.5rem;
-  padding: 1.15rem;
+  padding: 1.25rem;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   background: linear-gradient(135deg, white, var(--color-cream));
   box-shadow: var(--shadow-sm);
 }
 
-.checkout-quick-add[hidden],
-.checkout-quick-add:empty {
+.checkout-gallery[hidden],
+.checkout-gallery:empty {
   display: none;
 }
 
-.checkout-quick-add-heading {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 0.85rem;
+.checkout-gallery-heading {
+  margin-bottom: 1rem;
 }
 
-.checkout-suggestions-title {
+.checkout-gallery-heading h2 {
   font-family: var(--font-display);
-  font-size: 1.35rem;
+  font-size: clamp(1.35rem, 3vw, 1.8rem);
   line-height: 1.1;
   margin-top: 0.2rem;
 }
 
-.checkout-quick-add-hint {
-  color: var(--color-muted);
-  font-size: 0.82rem;
-}
-
-.suggestion-list {
+.checkout-gallery-stage {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.75rem;
+  place-items: center;
+  min-height: 360px;
+  max-height: 620px;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: white;
 }
 
-.suggestion-card {
+.checkout-gallery-stage img {
+  display: block;
+  width: 100%;
+  height: clamp(360px, 55vw, 620px);
+  object-fit: contain;
+}
+
+.checkout-gallery-thumbs {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
-  padding: 0.6rem;
-  border: 1px solid var(--color-border);
+  gap: 0.75rem;
+  margin-top: 0.85rem;
+  overflow-x: auto;
+  padding-bottom: 0.2rem;
+  scrollbar-width: thin;
+}
+
+.checkout-gallery-thumb {
+  flex: 0 0 78px;
+  width: 78px;
+  height: 78px;
+  overflow: hidden;
+  padding: 3px;
+  border: 2px solid transparent;
   border-radius: var(--radius);
   background: white;
-  transition: all var(--transition);
+  opacity: 0.68;
+  transition: border-color var(--transition), opacity var(--transition);
 }
 
-.suggestion-card:hover {
+.checkout-gallery-thumb:hover,
+.checkout-gallery-thumb.active {
   border-color: var(--color-brand);
-  box-shadow: var(--shadow-3d-lg);
+  opacity: 1;
 }
 
-.suggestion-card img {
-  width: 52px;
-  height: 52px;
+.checkout-gallery-thumb img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: var(--radius);
-  background: var(--color-cream);
-  flex-shrink: 0;
-}
-
-.suggestion-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-  min-width: 0;
-  flex: 1;
-}
-
-.suggestion-name {
-  font-size: 0.88rem;
-  font-weight: 500;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.suggestion-price {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--color-brand);
-}
-
-.suggestion-add {
-  flex-shrink: 0;
-  padding: 0.45rem 0.7rem;
-  min-height: 40px;
-  border: 2px solid var(--color-brand);
-  border-radius: var(--radius-pill);
-  background: transparent;
-  color: var(--color-brand);
-  font-weight: 600;
-  font-size: 0.82rem;
-  white-space: nowrap;
-  transition: all var(--transition);
-}
-
-.suggestion-add:hover {
-  background: var(--color-brand);
-  color: white;
+  border-radius: calc(var(--radius) - 4px);
 }
 
 /* Toast */
@@ -1695,7 +1667,6 @@ html[dir="rtl"] .footer ul a:hover { transform: translateX(-4px); }
   .product-grid { grid-template-columns: repeat(3, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .checkout-layout { grid-template-columns: 1fr; }
-  .suggestion-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 768px) {
@@ -2061,7 +2032,7 @@ html[dir="rtl"] .back-to-top {
   .checkout-summary { position: static; order: -1; }
   .checkout-form,
   .checkout-summary { padding: 1.25rem; }
-  .checkout-quick-add {
+  .checkout-gallery {
     margin-top: -1rem;
     padding: 1rem;
   }
@@ -2119,28 +2090,18 @@ html[dir="rtl"] .back-to-top {
     height: 80px;
   }
 
-  .checkout-quick-add-heading {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 0.35rem;
+  .checkout-gallery-stage {
+    min-height: 260px;
   }
 
-  .suggestion-list {
-    display: flex;
-    gap: 0.65rem;
-    margin-inline: -1rem;
-    padding-inline: 1rem;
-    overflow-x: auto;
-    scroll-snap-type: x proximity;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
+  .checkout-gallery-stage img {
+    height: min(82vw, 480px);
   }
 
-  .suggestion-list::-webkit-scrollbar { display: none; }
-
-  .suggestion-card {
-    flex: 0 0 min(280px, 82vw);
-    scroll-snap-align: start;
+  .checkout-gallery-thumb {
+    flex-basis: 68px;
+    width: 68px;
+    height: 68px;
   }
 
   .checkout-qty-row {

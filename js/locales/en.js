@@ -28,7 +28,6 @@ const LOCALE_EN = {
     instagram: "Instagram",
     pinterest: "Pinterest",
     facebook: "Facebook",
-    removeItem: "Remove item",
   },
   hero: {
     badge: "New Collection 2026",
@@ -143,11 +142,10 @@ const LOCALE_EN = {
     fillRequired: "Please fill in all required fields.",
     noProduct: "No product selected. Choose an item from the shop to place an order.",
     backToShop: "Back to Shop",
-    quickAdd: "Quick add",
-    alsoLike: "You may also like",
-    quickAddHint: "Add more products before completing your order",
-    add: "Add",
-    addedToOrder: "Added to your order!",
+    productImages: "Product images",
+    yourProduct: "Your product",
+    moreImages: "More product images",
+    viewImage: "View product image",
   },
   toast: {
     orderSuccess: "Order placed successfully! We will contact you soon.",
