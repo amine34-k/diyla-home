@@ -9,14 +9,21 @@ function initHeroParallax() {
   const hero = document.querySelector(".hero");
   const bg = document.querySelector(".hero-bg");
   if (!hero || !bg) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce), (pointer: coarse)").matches) return;
 
+  let framePending = false;
   window.addEventListener("scroll", () => {
-    const rect = hero.getBoundingClientRect();
-    if (rect.bottom > 0) {
-      const offset = window.scrollY * 0.35;
-      bg.style.transform = `scale(1.08) translateY(${offset}px)`;
-    }
-  });
+    if (framePending) return;
+    framePending = true;
+    requestAnimationFrame(() => {
+      const rect = hero.getBoundingClientRect();
+      if (rect.bottom > 0) {
+        const offset = window.scrollY * 0.2;
+        bg.style.transform = `scale(1.08) translateY(${offset}px)`;
+      }
+      framePending = false;
+    });
+  }, { passive: true });
 }
 
 function bindTiltCards(cards) {
@@ -48,6 +55,7 @@ function initTiltCards() {
 function initStatCounters() {
   const stats = document.querySelectorAll(".stat strong");
   if (!stats.length) return;
+  if (!("IntersectionObserver" in window)) return;
 
   const observer = new IntersectionObserver(
     (entries) => {

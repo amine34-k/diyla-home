@@ -26,8 +26,23 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function initSidebar() {
-  document.getElementById("sidebar-toggle")?.addEventListener("click", () => {
-    document.getElementById("sidebar")?.classList.toggle("open");
+  const sidebar = document.getElementById("sidebar");
+  const toggle = document.getElementById("sidebar-toggle");
+  const scrim = document.getElementById("sidebar-scrim");
+  const closeSidebar = () => {
+    sidebar?.classList.remove("open");
+    scrim?.classList.remove("open");
+    toggle?.setAttribute("aria-expanded", "false");
+  };
+
+  toggle?.addEventListener("click", () => {
+    const isOpen = sidebar?.classList.toggle("open");
+    scrim?.classList.toggle("open", Boolean(isOpen));
+    toggle.setAttribute("aria-expanded", String(Boolean(isOpen)));
+  });
+  scrim?.addEventListener("click", closeSidebar);
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeSidebar();
   });
 }
 
@@ -37,6 +52,8 @@ function initNavigation() {
       e.preventDefault();
       switchPanel(link.dataset.panel);
       document.getElementById("sidebar")?.classList.remove("open");
+      document.getElementById("sidebar-scrim")?.classList.remove("open");
+      document.getElementById("sidebar-toggle")?.setAttribute("aria-expanded", "false");
     });
   });
 
@@ -323,10 +340,14 @@ function openProductModal(product = null) {
   }
 
   modal.classList.add("open");
+  modal.setAttribute("aria-hidden", "false");
+  document.getElementById("product-name")?.focus();
 }
 
 function closeProductModal() {
-  document.getElementById("product-modal")?.classList.remove("open");
+  const modal = document.getElementById("product-modal");
+  modal?.classList.remove("open");
+  modal?.setAttribute("aria-hidden", "true");
   document.getElementById("product-form")?.reset();
   document.getElementById("product-id").value = "";
   document.getElementById("image-preview").style.display = "none";
@@ -414,10 +435,14 @@ function viewOrder(id) {
     <p style="text-align:right;font-size:1.1rem"><strong>Total: ${formatPrice(order.total)}</strong></p>
   `;
   document.getElementById("order-modal").classList.add("open");
+  document.getElementById("order-modal").setAttribute("aria-hidden", "false");
+  document.getElementById("order-modal-close")?.focus();
 }
 
 function closeOrderModal() {
-  document.getElementById("order-modal")?.classList.remove("open");
+  const modal = document.getElementById("order-modal");
+  modal?.classList.remove("open");
+  modal?.setAttribute("aria-hidden", "true");
 }
 
 function confirmDeleteOrder(id) {

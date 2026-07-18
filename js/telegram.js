@@ -1,9 +1,9 @@
 const TELEGRAM_CONFIG_KEY = "diyla-telegram";
 
-// Default credentials (can be overridden in Admin → Settings)
+// Configure Telegram locally in Admin → Settings. Never commit bot credentials.
 const TELEGRAM_DEFAULTS = {
-  botToken: "8754943324:AAGRXPgGVYG21WXZwAW1J1V1ATQGGGhYjYc",
-  chatId: "8509770974",
+  botToken: "",
+  chatId: "",
 };
 
 function getTelegramConfig() {

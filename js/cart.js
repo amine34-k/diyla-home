@@ -15,8 +15,19 @@ function goToCheckout(productId) {
   window.location.href = `checkout.html?product=${productId}`;
 }
 
+function escapeStorefrontHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
 function renderProductCard(product) {
   const name = getProductName(product);
+  const safeName = escapeStorefrontHtml(name);
+  const safeImage = escapeStorefrontHtml(product.image);
   const badgeClass = product.badge === "Sale" ? "sale" : "";
   const badge = product.badge
     ? `<span class="product-badge ${badgeClass}">${getBadgeLabel(product.badge)}</span>`
@@ -27,17 +38,17 @@ function renderProductCard(product) {
     : "";
 
   return `
-    <article class="product-card tilt-card" data-category="${product.category}">
+    <article class="product-card tilt-card" data-category="${escapeStorefrontHtml(product.category)}" aria-label="${safeName}">
       <div class="product-card-inner">
         <div class="product-image-wrap">
           ${badge}
-          <img src="${product.image}" alt="${name}" loading="lazy">
+          <img src="${safeImage}" alt="${safeName}" loading="lazy" decoding="async">
           <div class="product-shine"></div>
-          <button type="button" class="product-quick-add" onclick="goToCheckout(${product.id})">${t("checkout.orderNow")}</button>
+          <button type="button" class="product-quick-add" onclick="goToCheckout(${Number(product.id)})" aria-label="${escapeStorefrontHtml(t("checkout.orderNow"))}: ${safeName}">${t("checkout.orderNow")}</button>
         </div>
         <div class="product-info">
           <div class="product-category">${getCategoryLabel(product.category)}</div>
-          <h3 class="product-name">${name}</h3>
+          <h3 class="product-name">${safeName}</h3>
           <div class="product-price">
             <span class="current">${formatPrice(product.price)}</span>
             ${originalPrice}
@@ -65,9 +76,15 @@ function initShopFilters() {
   if (!tabs.length || !grid) return;
 
   tabs.forEach((tab) => {
+    tab.setAttribute("role", "tab");
+    tab.setAttribute("aria-selected", tab.classList.contains("active") ? "true" : "false");
     tab.addEventListener("click", () => {
-      tabs.forEach((t) => t.classList.remove("active"));
+      tabs.forEach((t) => {
+        t.classList.remove("active");
+        t.setAttribute("aria-selected", "false");
+      });
       tab.classList.add("active");
+      tab.setAttribute("aria-selected", "true");
 
       const category = tab.dataset.category;
       const products = getProductsByCategory(category);

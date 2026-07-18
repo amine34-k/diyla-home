@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="description" content="Shop furniture, interior decor, and kitchenware at Diyla Home.">
   <title>Shop — Diyla Home</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -58,7 +58,7 @@
     <div class="mesh-bg" aria-hidden="true"></div>
     <div class="container">
       <div class="shop-toolbar">
-        <div class="filter-tabs">
+        <div class="filter-tabs" role="tablist" aria-label="Product categories">
           <button type="button" class="filter-tab active" data-category="all" data-i18n="shop.all">All</button>
           <button type="button" class="filter-tab" data-category="furniture" data-i18n="categoryLabels.furniture">Furniture</button>
           <button type="button" class="filter-tab" data-category="decor" data-i18n="categoryLabels.decor">Interior Decor</button>
@@ -66,7 +66,7 @@
         </div>
         <span class="shop-count">12 products</span>
       </div>
-      <div class="product-grid"></div>
+      <div class="product-grid" aria-live="polite"></div>
     </div>
   </section>
 

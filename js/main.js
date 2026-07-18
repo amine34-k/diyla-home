@@ -33,20 +33,41 @@ function initHeader() {
   const menuToggle = document.querySelector(".menu-toggle");
   const mobileNav = document.querySelector(".mobile-nav");
 
+  menuToggle?.setAttribute("aria-expanded", "false");
+
+  const closeMenu = () => {
+    mobileNav?.classList.remove("open");
+    menuToggle?.classList.remove("active");
+    menuToggle?.setAttribute("aria-expanded", "false");
+  };
+
   window.addEventListener("scroll", () => {
     header?.classList.toggle("scrolled", window.scrollY > 20);
   });
 
   menuToggle?.addEventListener("click", () => {
-    mobileNav?.classList.toggle("open");
-    menuToggle.classList.toggle("active");
+    const isOpen = mobileNav?.classList.toggle("open");
+    menuToggle.classList.toggle("active", Boolean(isOpen));
+    menuToggle.setAttribute("aria-expanded", String(Boolean(isOpen)));
   });
 
   document.querySelectorAll(".mobile-nav a").forEach((link) => {
-    link.addEventListener("click", () => {
-      mobileNav?.classList.remove("open");
-      menuToggle?.classList.remove("active");
-    });
+    link.addEventListener("click", closeMenu);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && mobileNav?.classList.contains("open")) {
+      closeMenu();
+      menuToggle?.focus();
+    }
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!header?.contains(event.target)) closeMenu();
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 768) closeMenu();
   });
 }
 
@@ -89,6 +110,11 @@ function initShopPage() {
 function initScrollReveal() {
   const elements = document.querySelectorAll(".reveal");
   if (!elements.length) return;
+
+  if (!("IntersectionObserver" in window)) {
+    elements.forEach((el) => el.classList.add("visible"));
+    return;
+  }
 
   const observer = new IntersectionObserver(
     (entries) => {

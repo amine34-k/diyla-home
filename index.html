@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="description" content="Diyla Home — Curated furniture, interior decor, and kitchenware to transform your living space.">
   <title>Diyla Home — Furniture, Decor & Kitchenware</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,6 +44,20 @@
     </nav>
   </header>
 
+  <!-- Products first -->
+  <section class="featured featured--primary" id="products">
+    <div class="container">
+      <div class="section-header featured-header">
+        <div>
+          <p class="section-label" data-i18n="featured.label">Featured</p>
+          <h1 class="section-title" data-i18n="featured.title">Customer Favorites</h1>
+        </div>
+        <a href="shop.html" class="btn btn-outline" data-i18n="featured.viewAll">View All Products</a>
+      </div>
+      <div class="product-grid"></div>
+    </div>
+  </section>
+
   <!-- Hero -->
   <section class="hero">
     <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1920&q=80')"></div>
@@ -56,7 +70,7 @@
     <div class="container hero-content">
       <div class="hero-panel">
         <span class="hero-badge" data-i18n="hero.badge">New Collection 2026</span>
-        <h1 data-i18n="hero.title">Where Comfort Meets Timeless Design</h1>
+        <h2 data-i18n="hero.title">Where Comfort Meets Timeless Design</h2>
         <p data-i18n="hero.subtitle">Discover handpicked furniture, elegant decor, and artisan kitchenware — everything you need to create a home that tells your story.</p>
         <div class="hero-buttons">
           <a href="shop.html" class="btn btn-primary" data-i18n="hero.shopCollection">Shop Collection</a>
@@ -67,32 +81,6 @@
     <div class="hero-scroll" aria-hidden="true">
       <span>Scroll</span>
       <div class="hero-scroll-line"></div>
-    </div>
-  </section>
-
-  <!-- Trust Bar -->
-  <section class="trust-bar">
-    <div class="container trust-items">
-      <div class="trust-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12l5 5L20 7"/></svg>
-        <strong data-i18n="trust.qualityTitle">Quality Crafted</strong>
-        <span data-i18n="trust.qualityDesc">Premium materials</span>
-      </div>
-      <div class="trust-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="22" height="18" rx="2"/><path d="M1 9h22"/></svg>
-        <strong data-i18n="trust.shippingTitle">Free Shipping</strong>
-        <span data-i18n="trust.shippingDesc">On orders over 20 000 DA</span>
-      </div>
-      <div class="trust-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        <strong data-i18n="trust.secureTitle">Cash on Delivery</strong>
-        <span data-i18n="trust.secureDesc">Pay when you receive</span>
-      </div>
-      <div class="trust-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        <strong data-i18n="trust.returnsTitle">30-Day Returns</strong>
-        <span data-i18n="trust.returnsDesc">Hassle-free policy</span>
-      </div>
     </div>
   </section>
 
@@ -136,20 +124,6 @@
             </div>
           </div>
         </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Featured Products -->
-  <section class="featured reveal">
-    <div class="container">
-      <div class="section-header" style="text-align:left;margin-bottom:2.5rem">
-        <p class="section-label" data-i18n="featured.label">Featured</p>
-        <h2 class="section-title" data-i18n="featured.title">Customer Favorites</h2>
-      </div>
-      <div class="product-grid"></div>
-      <div style="text-align:center;margin-top:3rem">
-        <a href="shop.html" class="btn btn-outline" data-i18n="featured.viewAll">View All Products</a>
       </div>
     </div>
   </section>

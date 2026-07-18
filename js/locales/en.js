@@ -128,6 +128,8 @@ const LOCALE_EN = {
     wilaya: "Wilaya",
     baladiya: "Baladiya (Commune)",
     address: "Street Address",
+    addressOptional: "Street Address (optional)",
+    addressPlaceholder: "Neighborhood, street, building, floor...",
     notes: "Order Notes (optional)",
     selectWilaya: "Select wilaya",
     selectBaladiya: "Select baladiya",

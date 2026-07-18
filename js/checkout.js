@@ -144,6 +144,7 @@ function initCheckoutPage() {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
+    const errorEl = document.getElementById("checkout-error");
     const name = document.getElementById("checkout-name")?.value.trim();
     const phone = document.getElementById("checkout-phone")?.value.trim();
     const wilayaCode = wilayaSelect?.value;
@@ -151,9 +152,20 @@ function initCheckoutPage() {
     const address = document.getElementById("checkout-address")?.value.trim();
     const notes = document.getElementById("checkout-notes")?.value.trim();
 
-    if (!name || !phone || !wilayaCode || !baladiya || !address) {
-      showToast(t("checkout.fillRequired"));
+    if (!name || !phone || !wilayaCode || !baladiya) {
+      const message = t("checkout.fillRequired");
+      if (errorEl) {
+        errorEl.textContent = message;
+        errorEl.hidden = false;
+      }
+      form.querySelector(":invalid")?.focus();
+      showToast(message);
       return;
+    }
+
+    if (errorEl) {
+      errorEl.textContent = "";
+      errorEl.hidden = true;
     }
 
     const wilaya = ALGERIA_LOCATIONS.find((w) => w.code === wilayaCode);

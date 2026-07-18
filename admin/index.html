@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Admin Dashboard — Diyla Home</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,11 +43,12 @@
         <button type="button" class="btn-logout" id="logout-btn">Sign Out</button>
       </div>
     </aside>
+    <button type="button" class="sidebar-scrim" id="sidebar-scrim" aria-label="Close navigation"></button>
 
     <main class="admin-main">
       <div class="admin-topbar">
         <div style="display:flex;align-items:center;gap:1rem">
-          <button type="button" class="sidebar-toggle btn-ghost" id="sidebar-toggle" aria-label="Toggle sidebar">
+          <button type="button" class="sidebar-toggle btn-ghost" id="sidebar-toggle" aria-label="Toggle sidebar" aria-expanded="false">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
           </button>
           <h1 id="page-title">Overview</h1>
@@ -178,8 +179,8 @@
   </div>
 
   <!-- Product Modal -->
-  <div class="modal-overlay" id="product-modal">
-    <div class="modal">
+  <div class="modal-overlay" id="product-modal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
       <div class="modal-header">
         <h3 id="modal-title">Add Product</h3>
         <button type="button" class="modal-close" id="modal-close">&times;</button>
@@ -235,8 +236,8 @@
   </div>
 
   <!-- Order Detail Modal -->
-  <div class="modal-overlay" id="order-modal">
-    <div class="modal">
+  <div class="modal-overlay" id="order-modal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="order-modal-title">
       <div class="modal-header">
         <h3 id="order-modal-title">Order Details</h3>
         <button type="button" class="modal-close" id="order-modal-close">&times;</button>

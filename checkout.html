@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="description" content="Complete your order at Diyla Home — cash on delivery across Algeria.">
   <title>Checkout — Diyla Home</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -85,8 +85,8 @@
               </select>
             </div>
             <div class="form-row">
-              <label for="checkout-address" data-i18n="checkout.address">Street Address</label>
-              <textarea id="checkout-address" name="address" rows="3" required placeholder="Neighborhood, street, building, floor..."></textarea>
+              <label for="checkout-address" data-i18n="checkout.addressOptional">Street Address (optional)</label>
+              <textarea id="checkout-address" name="address" rows="3" autocomplete="street-address" data-i18n-placeholder="checkout.addressPlaceholder" placeholder="Neighborhood, street, building, floor..."></textarea>
             </div>
             <div class="form-row">
               <label for="checkout-notes" data-i18n="checkout.notes">Order Notes (optional)</label>
@@ -94,6 +94,7 @@
             </div>
           </fieldset>
 
+          <p id="checkout-error" class="form-error" role="alert" aria-live="polite" hidden></p>
           <button type="submit" class="btn btn-primary checkout-submit" data-i18n="checkout.placeOrder">Place Order — Cash on Delivery</button>
         </form>
 

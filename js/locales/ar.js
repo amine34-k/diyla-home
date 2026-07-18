@@ -126,6 +126,8 @@ const LOCALE_AR = {
     wilaya: "الولاية",
     baladiya: "البلدية",
     address: "العنوان",
+    addressOptional: "العنوان (اختياري)",
+    addressPlaceholder: "الحي، الشارع، المبنى، الطابق...",
     notes: "ملاحظات الطلب (اختياري)",
     selectWilaya: "اختر الولاية",
     selectBaladiya: "اختر البلدية",

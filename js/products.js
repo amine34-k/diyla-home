@@ -1,4 +1,9 @@
 const PRODUCTS_KEY = "diyla-products-dzd";
+const CATEGORY_LABELS = {
+  furniture: "Furniture",
+  decor: "Interior Decor",
+  kitchenware: "Kitchenware",
+};
 
 const DEFAULT_PRODUCTS = [
   {
@@ -112,12 +117,15 @@ const DEFAULT_PRODUCTS = [
 ];
 
 function getCategoryLabel(category) {
-  return t(`categoryLabels.${category}`);
+  return typeof t === "function" ? t(`categoryLabels.${category}`) : CATEGORY_LABELS[category] || category;
 }
 
 function getProductName(product) {
   const p = typeof product === "object" ? product : getProductById(product);
   if (!p) return "";
+  if (typeof getLocale !== "function" || typeof LOCALE_AR === "undefined" || typeof LOCALE_EN === "undefined") {
+    return p.name;
+  }
   const names = getLocale() === "ar" ? LOCALE_AR.products : LOCALE_EN.products;
   return names?.[p.id] || p.name;
 }
@@ -176,7 +184,7 @@ function deleteProduct(id) {
 }
 
 function formatPrice(amount) {
-  const locale = getLocale() === "ar" ? "ar-DZ" : "fr-DZ";
+  const locale = typeof getLocale === "function" && getLocale() === "ar" ? "ar-DZ" : "fr-DZ";
   return new Intl.NumberFormat(locale, {
     style: "currency",
     currency: "DZD",
