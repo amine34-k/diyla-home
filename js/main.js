@@ -15,13 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 window.addEventListener("localechange", () => {
   if (document.body.dataset.page === "checkout") {
-    const productId = getCheckoutProductId();
-    const product = getProductById(productId);
-    if (product) {
-      const qty = Number(document.getElementById("checkout-qty")?.value) || 1;
-      renderCheckoutSummary(product, qty);
-      refreshCheckoutLocations();
-    }
+    renderCheckoutSummary();
+    refreshCheckoutLocations();
   } else {
     initPageSpecific();
   }

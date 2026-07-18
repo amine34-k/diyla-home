@@ -1296,11 +1296,36 @@ h1, h2, h3, h4 {
 }
 
 .checkout-product {
+  position: relative;
   display: flex;
   gap: 1rem;
   margin-bottom: 1.25rem;
   padding-bottom: 1.25rem;
   border-bottom: 1px solid var(--color-border);
+}
+
+.checkout-item-remove {
+  position: absolute;
+  top: 0;
+  inset-inline-end: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: white;
+  color: var(--color-muted);
+  font-size: 1.1rem;
+  line-height: 1;
+  transition: all var(--transition);
+}
+
+.checkout-item-remove:hover {
+  background: var(--color-brand);
+  border-color: var(--color-brand);
+  color: white;
 }
 
 .checkout-product img {
@@ -1340,6 +1365,10 @@ h1, h2, h3, h4 {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.checkout-product-info .checkout-qty {
+  margin-top: 0.6rem;
 }
 
 .checkout-qty button {
@@ -1420,6 +1449,95 @@ h1, h2, h3, h4 {
   font-size: 0.82rem;
   line-height: 1.45;
   opacity: 0.9;
+}
+
+/* Checkout suggestions */
+.checkout-suggestions {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.checkout-suggestions:empty {
+  display: none;
+}
+
+.checkout-suggestions-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  margin-bottom: 0.85rem;
+}
+
+.suggestion-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.suggestion-card {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.6rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: white;
+  transition: all var(--transition);
+}
+
+.suggestion-card:hover {
+  border-color: var(--color-brand);
+  box-shadow: var(--shadow-3d-lg);
+}
+
+.suggestion-card img {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  background: var(--color-cream);
+  flex-shrink: 0;
+}
+
+.suggestion-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.suggestion-name {
+  font-size: 0.88rem;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.suggestion-price {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-brand);
+}
+
+.suggestion-add {
+  flex-shrink: 0;
+  padding: 0.5rem 0.9rem;
+  min-height: 40px;
+  border: 2px solid var(--color-brand);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-brand);
+  font-weight: 600;
+  font-size: 0.82rem;
+  white-space: nowrap;
+  transition: all var(--transition);
+}
+
+.suggestion-add:hover {
+  background: var(--color-brand);
+  color: white;
 }
 
 /* Toast */

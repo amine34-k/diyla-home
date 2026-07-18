@@ -47,38 +47,71 @@ function getCheckoutProductId() {
   return Number(params.get("product"));
 }
 
-function renderCheckoutSummary(product, quantity) {
-  const summary = document.getElementById("checkout-summary");
-  if (!summary || !product) return;
+// Items in the current order: [{ id, quantity }]. First entry is the main product.
+let checkoutItems = [];
 
-  const name = getProductName(product);
-  const lineTotal = product.price * quantity;
+function getCheckoutTotal() {
+  return checkoutItems.reduce((sum, item) => {
+    const p = getProductById(item.id);
+    return p ? sum + p.price * item.quantity : sum;
+  }, 0);
+}
+
+function getSimilarProducts(mainId, count = 4) {
+  const main = getProductById(mainId);
+  if (!main) return [];
+  const inOrder = new Set(checkoutItems.map((i) => i.id));
+  const all = getProducts().filter((p) => !inOrder.has(p.id));
+  const sameCategory = all.filter((p) => p.category === main.category);
+  const others = all.filter((p) => p.category !== main.category);
+  return sameCategory.concat(others).slice(0, count);
+}
+
+function renderCheckoutSummary() {
+  const summary = document.getElementById("checkout-summary");
+  if (!summary || !checkoutItems.length) return;
+
+  const itemsHtml = checkoutItems
+    .map((item, index) => {
+      const product = getProductById(item.id);
+      if (!product) return "";
+      const name = getProductName(product);
+      const isMain = index === 0;
+      return `
+        <div class="checkout-product" data-item-id="${product.id}">
+          <img src="${product.image}" alt="${name}" loading="lazy">
+          <div class="checkout-product-info">
+            <h3>${name}</h3>
+            <p class="checkout-product-meta">${getCategoryLabel(product.category)}</p>
+            <p class="checkout-product-price">${formatPrice(product.price)}</p>
+            <div class="checkout-qty">
+              <button type="button" class="qty-minus" data-item-id="${product.id}" aria-label="${t("aria.decreaseQty")}">−</button>
+              <input type="number" class="checkout-qty-input" min="1" max="99" value="${item.quantity}" readonly aria-label="${t("checkout.quantity")}">
+              <button type="button" class="qty-plus" data-item-id="${product.id}" aria-label="${t("aria.increaseQty")}">+</button>
+            </div>
+          </div>
+          ${
+            isMain
+              ? ""
+              : `<button type="button" class="checkout-item-remove" data-item-id="${product.id}" aria-label="${t("aria.removeItem")}">×</button>`
+          }
+        </div>
+      `;
+    })
+    .join("");
+
+  const total = getCheckoutTotal();
 
   summary.innerHTML = `
-    <div class="checkout-product">
-      <img src="${product.image}" alt="${name}" loading="lazy">
-      <div class="checkout-product-info">
-        <h3>${name}</h3>
-        <p class="checkout-product-meta">${getCategoryLabel(product.category)}</p>
-        <p class="checkout-product-price">${formatPrice(product.price)}</p>
-      </div>
-    </div>
-    <div class="checkout-qty-row">
-      <label for="checkout-qty">${t("checkout.quantity")}</label>
-      <div class="checkout-qty">
-        <button type="button" id="qty-minus" aria-label="${t("aria.decreaseQty")}">−</button>
-        <input type="number" id="checkout-qty" min="1" max="99" value="${quantity}" readonly>
-        <button type="button" id="qty-plus" aria-label="${t("aria.increaseQty")}">+</button>
-      </div>
-    </div>
+    <div class="checkout-items">${itemsHtml}</div>
     <div class="checkout-totals">
       <div class="checkout-total-line">
         <span>${t("checkout.subtotal")}</span>
-        <strong id="checkout-subtotal">${formatPrice(lineTotal)}</strong>
+        <strong id="checkout-subtotal">${formatPrice(total)}</strong>
       </div>
       <div class="checkout-total-line checkout-total-final">
         <span>${t("checkout.total")}</span>
-        <strong id="checkout-total">${formatPrice(lineTotal)}</strong>
+        <strong id="checkout-total">${formatPrice(total)}</strong>
       </div>
     </div>
     <div class="checkout-payment-note">
@@ -91,7 +124,52 @@ function renderCheckoutSummary(product, quantity) {
         <span>${t("checkout.codOnly")}</span>
       </div>
     </div>
+    <div class="checkout-suggestions" id="checkout-suggestions"></div>
   `;
+
+  renderCheckoutSuggestions();
+}
+
+function renderCheckoutSuggestions() {
+  const container = document.getElementById("checkout-suggestions");
+  if (!container || !checkoutItems.length) return;
+
+  const suggestions = getSimilarProducts(checkoutItems[0].id);
+  if (!suggestions.length) {
+    container.innerHTML = "";
+    return;
+  }
+
+  const cards = suggestions
+    .map((product) => {
+      const name = getProductName(product);
+      return `
+        <div class="suggestion-card">
+          <img src="${product.image}" alt="${name}" loading="lazy">
+          <div class="suggestion-info">
+            <span class="suggestion-name">${name}</span>
+            <span class="suggestion-price">${formatPrice(product.price)}</span>
+          </div>
+          <button type="button" class="suggestion-add" data-product-id="${product.id}">
+            + ${t("checkout.add")}
+          </button>
+        </div>
+      `;
+    })
+    .join("");
+
+  container.innerHTML = `
+    <h3 class="checkout-suggestions-title">${t("checkout.alsoLike")}</h3>
+    <div class="suggestion-list">${cards}</div>
+  `;
+}
+
+function updateCheckoutTotals() {
+  const total = formatPrice(getCheckoutTotal());
+  const sub = document.getElementById("checkout-subtotal");
+  const tot = document.getElementById("checkout-total");
+  if (sub) sub.textContent = total;
+  if (tot) tot.textContent = total;
 }
 
 function initCheckoutPage() {
@@ -112,8 +190,8 @@ function initCheckoutPage() {
   if (emptyEl) emptyEl.hidden = true;
   if (layout) layout.hidden = false;
 
-  let quantity = 1;
-  renderCheckoutSummary(product, quantity);
+  checkoutItems = [{ id: product.id, quantity: 1 }];
+  renderCheckoutSummary();
 
   const wilayaSelect = document.getElementById("checkout-wilaya");
   const baladiyaSelect = document.getElementById("checkout-baladiya");
@@ -125,20 +203,39 @@ function initCheckoutPage() {
   });
 
   document.getElementById("checkout-summary")?.addEventListener("click", (e) => {
-    const minus = e.target.closest("#qty-minus");
-    const plus = e.target.closest("#qty-plus");
+    const addBtn = e.target.closest(".suggestion-add");
+    if (addBtn) {
+      const id = Number(addBtn.dataset.productId);
+      if (!checkoutItems.some((i) => i.id === id)) {
+        checkoutItems.push({ id, quantity: 1 });
+        renderCheckoutSummary();
+        showToast(t("checkout.addedToOrder"));
+      }
+      return;
+    }
+
+    const removeBtn = e.target.closest(".checkout-item-remove");
+    if (removeBtn) {
+      const id = Number(removeBtn.dataset.itemId);
+      checkoutItems = checkoutItems.filter((i) => i.id !== id);
+      renderCheckoutSummary();
+      return;
+    }
+
+    const minus = e.target.closest(".qty-minus");
+    const plus = e.target.closest(".qty-plus");
     if (!minus && !plus) return;
 
-    if (minus) quantity = Math.max(1, quantity - 1);
-    if (plus) quantity = Math.min(99, quantity + 1);
+    const id = Number((minus || plus).dataset.itemId);
+    const item = checkoutItems.find((i) => i.id === id);
+    if (!item) return;
 
-    const qtyInput = document.getElementById("checkout-qty");
-    if (qtyInput) qtyInput.value = quantity;
-    const total = formatPrice(product.price * quantity);
-    const sub = document.getElementById("checkout-subtotal");
-    const tot = document.getElementById("checkout-total");
-    if (sub) sub.textContent = total;
-    if (tot) tot.textContent = total;
+    if (minus) item.quantity = Math.max(1, item.quantity - 1);
+    if (plus) item.quantity = Math.min(99, item.quantity + 1);
+
+    const row = document.querySelector(`.checkout-product[data-item-id="${id}"] .checkout-qty-input`);
+    if (row) row.value = item.quantity;
+    updateCheckoutTotals();
   });
 
   form.addEventListener("submit", (e) => {
@@ -173,17 +270,19 @@ function initCheckoutPage() {
     const selectedOpt = baladiyaSelect?.selectedOptions?.[0];
     const baladiyaAr = selectedOpt?.dataset?.nameAr || baladiya;
 
-    const qty = Number(document.getElementById("checkout-qty")?.value) || quantity;
-
-    const items = [
-      {
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        image: product.image,
-        quantity: qty,
-      },
-    ];
+    const items = checkoutItems
+      .map((item) => {
+        const p = getProductById(item.id);
+        if (!p) return null;
+        return {
+          id: p.id,
+          name: p.name,
+          price: p.price,
+          image: p.image,
+          quantity: item.quantity,
+        };
+      })
+      .filter(Boolean);
 
     const submitBtn = form.querySelector(".checkout-submit");
     if (submitBtn) submitBtn.disabled = true;

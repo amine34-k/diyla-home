@@ -28,6 +28,7 @@ const LOCALE_AR = {
     instagram: "إنستغرام",
     pinterest: "بينتريست",
     facebook: "فيسبوك",
+    removeItem: "إزالة المنتج",
   },
   hero: {
     badge: "مجموعة جديدة 2026",
@@ -140,6 +141,9 @@ const LOCALE_AR = {
     fillRequired: "يرجى ملء جميع الحقول المطلوبة.",
     noProduct: "لم يتم اختيار منتج. اختر منتجاً من المتجر لإتمام الطلب.",
     backToShop: "العودة إلى المتجر",
+    alsoLike: "قد يعجبك أيضاً",
+    add: "أضف",
+    addedToOrder: "تمت الإضافة إلى طلبك!",
   },
   toast: {
     orderSuccess: "تم تقديم الطلب بنجاح! سنتواصل معك قريباً.",

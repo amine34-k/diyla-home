@@ -28,6 +28,7 @@ const LOCALE_EN = {
     instagram: "Instagram",
     pinterest: "Pinterest",
     facebook: "Facebook",
+    removeItem: "Remove item",
   },
   hero: {
     badge: "New Collection 2026",
@@ -142,6 +143,9 @@ const LOCALE_EN = {
     fillRequired: "Please fill in all required fields.",
     noProduct: "No product selected. Choose an item from the shop to place an order.",
     backToShop: "Back to Shop",
+    alsoLike: "You may also like",
+    add: "Add",
+    addedToOrder: "Added to your order!",
   },
   toast: {
     orderSuccess: "Order placed successfully! We will contact you soon.",
