@@ -124,19 +124,19 @@ function renderCheckoutSummary() {
         <span>${t("checkout.codOnly")}</span>
       </div>
     </div>
-    <div class="checkout-suggestions" id="checkout-suggestions"></div>
   `;
 
   renderCheckoutSuggestions();
 }
 
 function renderCheckoutSuggestions() {
-  const container = document.getElementById("checkout-suggestions");
+  const container = document.getElementById("checkout-quick-add");
   if (!container || !checkoutItems.length) return;
 
   const suggestions = getSimilarProducts(checkoutItems[0].id);
   if (!suggestions.length) {
     container.innerHTML = "";
+    container.hidden = true;
     return;
   }
 
@@ -159,9 +159,16 @@ function renderCheckoutSuggestions() {
     .join("");
 
   container.innerHTML = `
-    <h3 class="checkout-suggestions-title">${t("checkout.alsoLike")}</h3>
+    <div class="checkout-quick-add-heading">
+      <div>
+        <span class="section-label">${t("checkout.quickAdd")}</span>
+        <h2 class="checkout-suggestions-title">${t("checkout.alsoLike")}</h2>
+      </div>
+      <span class="checkout-quick-add-hint">${t("checkout.quickAddHint")}</span>
+    </div>
     <div class="suggestion-list">${cards}</div>
   `;
+  container.hidden = false;
 }
 
 function updateCheckoutTotals() {
@@ -180,9 +187,11 @@ function initCheckoutPage() {
   const product = getProductById(productId);
   const emptyEl = document.getElementById("checkout-empty");
   const layout = document.getElementById("checkout-layout");
+  const quickAdd = document.getElementById("checkout-quick-add");
 
   if (!product) {
     if (layout) layout.hidden = true;
+    if (quickAdd) quickAdd.hidden = true;
     if (emptyEl) emptyEl.hidden = false;
     return;
   }
@@ -202,7 +211,7 @@ function initCheckoutPage() {
     populateCommunes(wilayaSelect.value, baladiyaSelect);
   });
 
-  document.getElementById("checkout-summary")?.addEventListener("click", (e) => {
+  document.querySelector(".checkout-page")?.addEventListener("click", (e) => {
     const addBtn = e.target.closest(".suggestion-add");
     if (addBtn) {
       const id = Number(addBtn.dataset.productId);
