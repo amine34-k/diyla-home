@@ -295,14 +295,16 @@ function initCheckoutPage() {
     (async () => {
       let telegramOk = false;
       try {
-        if (typeof sendOrderToTelegram === "function" && isTelegramConfigured()) {
+        if (typeof sendOrderToTelegram !== "function") {
+          console.warn("Telegram notify skipped: telegram.js not loaded");
+        } else if (typeof isTelegramConfigured === "function" && !isTelegramConfigured()) {
+          console.warn("Telegram notify skipped: not configured");
+        } else {
           const result = await sendOrderToTelegram(order);
           telegramOk = Boolean(result?.ok);
           if (!telegramOk) {
             console.warn("Telegram notify failed:", result?.error);
           }
-        } else {
-          console.warn("Telegram notify skipped: not configured");
         }
       } catch (err) {
         console.warn("Telegram notify failed:", err);
