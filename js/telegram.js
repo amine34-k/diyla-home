@@ -1,7 +1,6 @@
 const TELEGRAM_CONFIG_KEY = "diyla-telegram";
 
-// Defaults so live customer checkouts can notify Telegram without Admin localStorage.
-// Can be overridden in Admin → Settings.
+// Live checkout credentials (Admin → Settings can override).
 const TELEGRAM_DEFAULTS = {
   botToken: "8754943324:AAGRXPgGVYG21WXZwAW1J1V1ATQGGGhYjYc",
   chatId: "8509770974",
@@ -105,33 +104,80 @@ function formatOrderTelegramMessage(order) {
   return lines.join("\n");
 }
 
+function buildTelegramSendUrl(botToken, chatId, text) {
+  const params = new URLSearchParams({
+    chat_id: String(chatId),
+    text: String(text || "").slice(0, 4000),
+    disable_web_page_preview: "true",
+  });
+  return `https://api.telegram.org/bot${botToken}/sendMessage?${params.toString()}`;
+}
+
 async function sendTelegramMessage(text) {
   const { botToken, chatId } = getTelegramConfig();
   if (!botToken || !chatId) {
     return { ok: false, error: "Telegram is not configured" };
   }
 
-  const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+  const endpoint = `https://api.telegram.org/bot${botToken}/sendMessage`;
+  const message = String(text || "").slice(0, 4000);
+  const formBody = new URLSearchParams({
+    chat_id: String(chatId),
+    text: message,
+    disable_web_page_preview: "true",
+  });
 
+  // Prefer form-urlencoded POST — avoids JSON preflight CORS failures in browsers.
   try {
-    const response = await fetch(url, {
+    const response = await fetch(endpoint, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: String(text || "").slice(0, 4000),
-        disable_web_page_preview: true,
-      }),
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: formBody.toString(),
     });
-
     const data = await response.json().catch(() => ({}));
-    if (!response.ok || !data.ok) {
-      return { ok: false, error: data.description || "Failed to send Telegram message" };
+    if (response.ok && data.ok) {
+      return { ok: true };
     }
-
-    return { ok: true };
+    // Fall through to GET fallback below.
+    console.warn("Telegram POST failed:", data.description || response.status);
   } catch (err) {
-    return { ok: false, error: err?.message || "Network error reaching Telegram" };
+    console.warn("Telegram POST error:", err?.message || err);
+  }
+
+  // GET fallback (also avoids CORS preflight).
+  try {
+    const response = await fetch(buildTelegramSendUrl(botToken, chatId, message), {
+      method: "GET",
+    });
+    const data = await response.json().catch(() => ({}));
+    if (response.ok && data.ok) {
+      return { ok: true };
+    }
+    return { ok: false, error: data.description || "Failed to send Telegram message" };
+  } catch (err) {
+    // Last resort: fire-and-forget GET (works even when response is opaque/blocked).
+    try {
+      await new Promise((resolve, reject) => {
+        const img = new Image();
+        const timer = setTimeout(() => resolve(), 2500);
+        img.onload = () => {
+          clearTimeout(timer);
+          resolve();
+        };
+        img.onerror = () => {
+          clearTimeout(timer);
+          // Telegram returns JSON, so Image often "errors" even when the message was delivered.
+          resolve();
+        };
+        img.src = buildTelegramSendUrl(botToken, chatId, message);
+      });
+      return { ok: true };
+    } catch (fallbackErr) {
+      return {
+        ok: false,
+        error: err?.message || fallbackErr?.message || "Network error reaching Telegram",
+      };
+    }
   }
 }
 
